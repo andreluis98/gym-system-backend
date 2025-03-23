@@ -3,6 +3,7 @@ package br.com.gym.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.gym.domain.Role;
 import br.com.gym.model.User;
 import br.com.gym.repository.UserRepository;
 
@@ -19,6 +20,9 @@ public class UserServices {
 	        }
 	        if (userRepository.findByEmail(user.getEmail()) != null) {
 	            throw new Exception("Email already exists.");
+	        }
+	        if (user.getRole() == null) {
+	            user.setRole(Role.ALUNO); 
 	        }
 
 	        return userRepository.save(user);
