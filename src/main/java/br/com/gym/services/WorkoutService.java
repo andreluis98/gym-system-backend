@@ -21,5 +21,19 @@ public class WorkoutService {
 	public List<Workout> searchWorkoutsByName(String name) {
         return workoutRepository.findByNameContainingIgnoreCase(name);
     }
+	
+    public List<Workout> getAllWorkouts() {
+        List<Workout> workouts = workoutRepository.findAll();
+        workouts.forEach(workout -> workout.getExercises());
+        return workouts;
+    }
+    
+    public Workout createWorkout(Workout workout) {
+        return workoutRepository.save(workout);
+    }
+    
+    public Workout getWorkoutById(Long id) {
+        return workoutRepository.findById(id).orElse(null); 
+    }
 
 }
