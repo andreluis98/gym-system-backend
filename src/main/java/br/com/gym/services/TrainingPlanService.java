@@ -38,5 +38,14 @@ public class TrainingPlanService {
 	        return workoutRepository.findAll();
 	    }
 	
+	    
+	    public TrainingPlan getTrainingPlanWithWorkouts(Long planId) {
+	        return trainingPlanRepository.findById(planId)
+	            .map(trainingPlan -> {
+	                trainingPlan.getWorkouts().forEach(workout -> workout.getExercises());
+	                return trainingPlan;
+	            })
+	            .orElseThrow(() -> new RuntimeException("Plano de treino não encontrado"));
+	    }
 
 }
