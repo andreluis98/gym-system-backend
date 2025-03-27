@@ -12,4 +12,6 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
 	
 	List<Workout> findByNameContainingIgnoreCase(String Name);
 	
+    List<Workout> findByName(String name);
+	
 }

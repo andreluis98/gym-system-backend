@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.gym.domain.Role;
+import br.com.gym.dto.UserDTO;
 import br.com.gym.model.User;
 import br.com.gym.repository.UserRepository;
 
@@ -14,7 +15,16 @@ public class UserServices {
 	  @Autowired
 	    private UserRepository userRepository;
 	  
-	    public User register(User user) throws Exception {
+	    public UserDTO login(String username, String password) {
+	        User user = userRepository.findByUsernameAndPassword(username, password);  
+	        if (user != null) {
+	            return new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getUsername(), user.getRole().name());
+	        } else {
+	            return null;
+	        }
+	    }
+  
+	    public UserDTO register(User user) throws Exception {
 	        if (userRepository.findByUsername(user.getUsername()) != null) {
 	            throw new Exception("Username already exists.");
 	        }
@@ -24,17 +34,18 @@ public class UserServices {
 	        if (user.getRole() == null) {
 	            user.setRole(Role.ALUNO); 
 	        }
+	        user = userRepository.save(user);
 
-	        return userRepository.save(user);
+	        return new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getUsername(), user.getRole().name());
 	    }
 	  
-	    public User login(String username, String password) {
-	        return userRepository.findByUsernameAndPassword(username, password);
-	    }
 	    
 	    public User findById(Long id) throws Exception {
 	        return userRepository.findById(id)
-	            .orElseThrow(() -> new Exception("Usuário não encontrado"));
+	                .orElseThrow(() -> new Exception("Usuário não encontrado"));
 	    }
-
+	    
+	    public User validateUser(String username, String password) {
+	        return userRepository.findByUsernameAndPassword(username, password);
+	    }
 }
