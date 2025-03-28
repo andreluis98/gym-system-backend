@@ -8,6 +8,9 @@ import jakarta.servlet.http.HttpSession;
 import br.com.gym.dto.UserDTO;
 import br.com.gym.model.Attendance;
 import br.com.gym.model.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,12 +19,21 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/gym/attendances")
+@Tag(name = "Attendance", description = "Endpoints para gerenciamento de presença")
 public class AttendanceController {
 
     @Autowired
     private AttendanceService attendanceService;
 
-    
+    @Operation(
+            summary = "Registrar presença do usuário",
+            description = "Registra a presença de um usuário em um treino específico",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Presença registrada com sucesso"),
+                @ApiResponse(responseCode = "400", description = "Erro ao registrar presença"),
+                @ApiResponse(responseCode = "401", description = "Usuário não autenticado")
+            }
+    )
     @PostMapping("/mark")
     public ResponseEntity<Map<String, Object>> markAttendance(
             @RequestParam Long userId,
@@ -31,7 +43,7 @@ public class AttendanceController {
 
         Map<String, Object> response = new HashMap<>();
         User user = (User) session.getAttribute("user");  
-        
+
         if (user == null) {
             response.put("status", "error");
             response.put("message", "Usuário não está logado!");
@@ -55,6 +67,15 @@ public class AttendanceController {
         }
     }
 
+    @Operation(
+            summary = "Obter presença de um usuário em um treino",
+            description = "Recupera a presença de um usuário em um treino específico, identificando por workoutId",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Presença encontrada com sucesso"),
+                @ApiResponse(responseCode = "404", description = "Presença não encontrada"),
+                @ApiResponse(responseCode = "401", description = "Usuário não autenticado")
+            }
+    )
     @GetMapping("/workout/{workoutId}")
     public ResponseEntity<Map<String, Object>> getAttendance(
             @PathVariable Long workoutId,
@@ -90,7 +111,4 @@ public class AttendanceController {
             return ResponseEntity.status(400).body(response);
         }
     }
-
-
-
 }
