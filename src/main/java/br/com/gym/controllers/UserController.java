@@ -10,13 +10,26 @@ import br.com.gym.dto.UserDTO;
 import br.com.gym.model.User;
 import br.com.gym.services.UserServices;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/gym/users")
+@Tag(name = "User", description = "Endpoints para gerenciar usuários")
 public class UserController {
 
     @Autowired
     private UserServices userService;
 
+    @Operation(
+            summary = "Registrar usuário",
+            description = "Registra um novo usuário no sistema",
+            responses = {
+                @ApiResponse(responseCode = "201", description = "Usuário registrado com sucesso"),
+                @ApiResponse(responseCode = "400", description = "Erro ao registrar usuário")
+            }
+    )
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> registerUser(@RequestBody User user) {
         Map<String, Object> response = new HashMap<>();
@@ -33,5 +46,4 @@ public class UserController {
             return ResponseEntity.status(400).body(response);  
         }
     }
-
 }
