@@ -1,4 +1,4 @@
-```md
+
 # REST API com Spring Boot e Java + Frontend Angular
 
 Este projeto é composto por uma **API REST** desenvolvida com **Spring Boot 3.4.0** e um **frontend em Angular**, utilizando **PostgreSQL** como banco de dados e documentação via **SpringDoc OpenAPI**.
@@ -137,4 +137,3 @@ ng test
 
 ## 📜 Licença
 Este projeto é um demo para estudos com Spring Boot e Angular.
-```
