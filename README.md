@@ -17,7 +17,7 @@ Este projeto é composto por uma **API REST** desenvolvida com **Spring Boot 3.4
 - SpringDoc OpenAPI (Swagger UI)
 - Maven
 
-### Frontend (Será iniciado)
+### Frontend (Pendente)
 - Angular (versão a definir)
 - TypeScript
 - HTML/CSS
@@ -76,7 +76,7 @@ mvnw.cmd spring-boot:run
 
 A API será iniciada em `http://localhost:8080`.
 
-### Frontend (Angular)
+### Frontend (Angular) [Pendente]
 
 Acesse a pasta do frontend:
 
@@ -108,7 +108,7 @@ A documentação da API está disponível via Swagger UI:
 
 ---
 
-## 🛠 Endpoints Disponíveis
+## 🛠 Endpoints Disponíveis (Assim que for finalizado realizo o mapping)
 
 | Método  | Endpoint   | Descrição |
 |---------|-----------|------------|
